@@ -24,6 +24,7 @@ type Options struct {
 	SignRequest       bool
 	ForceAuthn        bool // TODO(ross): this should be *bool
 	CookieSameSite    http.SameSite
+	ExternalCallback  saml.ExternalCallback
 }
 
 // DefaultSessionCodec returns the default SessionCodec for the provided options,
@@ -104,6 +105,7 @@ func DefaultServiceProvider(opts Options) saml.ServiceProvider {
 		ForceAuthn:        forceAuthn,
 		SignatureMethod:   signatureMethod,
 		AllowIDPInitiated: opts.AllowIDPInitiated,
+		ExternalCallback:  opts.ExternalCallback,
 	}
 }
 
