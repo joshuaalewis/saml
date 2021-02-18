@@ -4,7 +4,7 @@ import (
 	"encoding/xml"
 	"net/http"
 
-	"github.com/crewjam/saml"
+	"github.com/joshuaalewis/saml"
 )
 
 // Middleware implements middleware than allows a web application
@@ -193,6 +193,17 @@ func (m *Middleware) CreateSessionFromAssertion(w http.ResponseWriter, r *http.R
 	if err := m.Session.CreateSession(w, r, assertion); err != nil {
 		m.OnError(w, r, err)
 		return
+	}
+	
+	if err := m.ServiceProvider.ExternalCallback(w, r, assertion.Subject.NameID.Value, assertion.Issuer.Value); err != nil {
+		m.OnError(w, r, err)
+		return
+	}
+
+	if strings.Contains(r.Host, "localhost") {
+		redirectURI = "/"
+	} else {
+		redirectURI = "/hub"
 	}
 
 	http.Redirect(w, r, redirectURI, http.StatusFound)
