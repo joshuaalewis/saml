@@ -52,6 +52,9 @@ type SignatureVerifier interface {
 	VerifySignature(validationContext *dsig.ValidationContext, el *etree.Element) error
 }
 
+// ExternalCallback is a callback func post-assertion validation
+type ExternalCallback func(http.ResponseWriter, *http.Request, string, string) error
+
 // ServiceProvider implements SAML Service provider.
 //
 // In SAML, service providers delegate responsibility for identifying
@@ -108,6 +111,9 @@ type ServiceProvider struct {
 
 	// SignatureMethod, if non-empty, authentication requests will be signed
 	SignatureMethod string
+	
+	// ExternalCallback callback to primary application
+	ExternalCallback ExternalCallback
 }
 
 // MaxIssueDelay is the longest allowed time between when a SAML assertion is
