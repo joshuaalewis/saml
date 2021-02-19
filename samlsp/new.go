@@ -1,4 +1,3 @@
-// Package samlsp provides helpers that can be used to protect web services using SAML.
 package samlsp
 
 import (
@@ -14,17 +13,18 @@ import (
 
 // Options represents the parameters for creating a new middleware
 type Options struct {
-	EntityID          string
-	URL               url.URL
-	Key               *rsa.PrivateKey
-	Certificate       *x509.Certificate
-	Intermediates     []*x509.Certificate
-	AllowIDPInitiated bool
-	IDPMetadata       *saml.EntityDescriptor
-	SignRequest       bool
-	ForceAuthn        bool // TODO(ross): this should be *bool
-	CookieSameSite    http.SameSite
-	ExternalCallback  saml.ExternalCallback
+	EntityID            string
+	URL                 url.URL
+	Key                 *rsa.PrivateKey
+	Certificate         *x509.Certificate
+	Intermediates       []*x509.Certificate
+	AllowIDPInitiated   bool
+	IDPMetadata         *saml.EntityDescriptor
+	SignRequest         bool
+	ForceAuthn          bool // TODO(ross): this should be *bool
+	CookieSameSite      http.SameSite
+	ExternalCallback    saml.ExternalCallback
+	CatchAllRedirectURL string
 }
 
 // DefaultSessionCodec returns the default SessionCodec for the provided options,
@@ -94,18 +94,19 @@ func DefaultServiceProvider(opts Options) saml.ServiceProvider {
 	}
 
 	return saml.ServiceProvider{
-		EntityID:          opts.EntityID,
-		Key:               opts.Key,
-		Certificate:       opts.Certificate,
-		Intermediates:     opts.Intermediates,
-		MetadataURL:       *metadataURL,
-		AcsURL:            *acsURL,
-		SloURL:            *sloURL,
-		IDPMetadata:       opts.IDPMetadata,
-		ForceAuthn:        forceAuthn,
-		SignatureMethod:   signatureMethod,
-		AllowIDPInitiated: opts.AllowIDPInitiated,
-		ExternalCallback:  opts.ExternalCallback,
+		EntityID:            opts.EntityID,
+		Key:                 opts.Key,
+		Certificate:         opts.Certificate,
+		Intermediates:       opts.Intermediates,
+		MetadataURL:         *metadataURL,
+		AcsURL:              *acsURL,
+		SloURL:              *sloURL,
+		IDPMetadata:         opts.IDPMetadata,
+		ForceAuthn:          forceAuthn,
+		SignatureMethod:     signatureMethod,
+		AllowIDPInitiated:   opts.AllowIDPInitiated,
+		ExternalCallback:    opts.ExternalCallback,
+		CatchAllRedirectURL: opts.CatchAllRedirectURL,
 	}
 }
 

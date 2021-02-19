@@ -3,6 +3,7 @@ package samlsp
 import (
 	"encoding/xml"
 	"net/http"
+	"strings"
 
 	"github.com/joshuaalewis/saml"
 )
@@ -194,7 +195,7 @@ func (m *Middleware) CreateSessionFromAssertion(w http.ResponseWriter, r *http.R
 		m.OnError(w, r, err)
 		return
 	}
-	
+
 	if err := m.ServiceProvider.ExternalCallback(w, r, assertion.Subject.NameID.Value, assertion.Issuer.Value); err != nil {
 		m.OnError(w, r, err)
 		return
@@ -202,8 +203,8 @@ func (m *Middleware) CreateSessionFromAssertion(w http.ResponseWriter, r *http.R
 
 	if strings.Contains(r.Host, "localhost") {
 		redirectURI = "/"
-	} else {
-		redirectURI = "/hub"
+	} else if m.ServiceProvider.CatchAllRedirectURL != "" {
+		redirectURI = m.ServiceProvider.CatchAllRedirectURL
 	}
 
 	http.Redirect(w, r, redirectURI, http.StatusFound)

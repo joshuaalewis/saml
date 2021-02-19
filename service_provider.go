@@ -111,9 +111,12 @@ type ServiceProvider struct {
 
 	// SignatureMethod, if non-empty, authentication requests will be signed
 	SignatureMethod string
-	
+
 	// ExternalCallback callback to primary application
 	ExternalCallback ExternalCallback
+
+	// CatchAllRedirectURL if used, this url will be the primary redirect after login
+	CatchAllRedirectURL string
 }
 
 // MaxIssueDelay is the longest allowed time between when a SAML assertion is
