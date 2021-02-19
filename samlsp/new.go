@@ -81,14 +81,14 @@ func DefaultRequestTracker(opts Options, serviceProvider *saml.ServiceProvider) 
 // DefaultServiceProvider returns the default saml.ServiceProvider for the provided
 // options.
 func DefaultServiceProvider(opts Options) saml.ServiceProvider {
-	if opts.UniqueIdentifier == "" {
-		metadataURL := opts.URL.ResolveReference(&url.URL{Path: "saml/metadata"})
-		acsURL := opts.URL.ResolveReference(&url.URL{Path: "saml/acs"})
-		sloURL := opts.URL.ResolveReference(&url.URL{Path: "saml/slo"})
-	} else {
-		metadataURL := opts.URL.ResolveReference(&url.URL{Path: "saml/" + opts.UniqueIdentifier + "/metadata"})
-		acsURL := opts.URL.ResolveReference(&url.URL{Path: "saml/" + opts.UniqueIdentifier + "/acs"})
-		sloURL := opts.URL.ResolveReference(&url.URL{Path: "saml/" + opts.UniqueIdentifier + "/slo"})
+	metadataURL := opts.URL.ResolveReference(&url.URL{Path: "saml/metadata"})
+	acsURL := opts.URL.ResolveReference(&url.URL{Path: "saml/acs"})
+	sloURL := opts.URL.ResolveReference(&url.URL{Path: "saml/slo"})
+
+	if opts.UniqueIdentifier != "" {
+		metadataURL = opts.URL.ResolveReference(&url.URL{Path: "saml/" + opts.UniqueIdentifier + "/metadata"})
+		acsURL = opts.URL.ResolveReference(&url.URL{Path: "saml/" + opts.UniqueIdentifier + "/acs"})
+		sloURL = opts.URL.ResolveReference(&url.URL{Path: "saml/" + opts.UniqueIdentifier + "/slo"})
 	}
 
 	var forceAuthn *bool
