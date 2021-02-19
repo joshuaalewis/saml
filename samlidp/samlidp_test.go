@@ -18,8 +18,8 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 
-	"github.com/crewjam/saml"
-	"github.com/crewjam/saml/logger"
+	"github.com/joshuaalewis/saml"
+	"github.com/joshuaalewis/saml/logger"
 )
 
 type testRandomReader struct {

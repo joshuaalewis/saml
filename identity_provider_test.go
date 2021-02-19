@@ -27,9 +27,9 @@ import (
 	"github.com/beevik/etree"
 	"github.com/dgrijalva/jwt-go"
 
-	"github.com/crewjam/saml/logger"
-	"github.com/crewjam/saml/testsaml"
-	"github.com/crewjam/saml/xmlenc"
+	"github.com/joshuaalewis/saml/logger"
+	"github.com/joshuaalewis/saml/testsaml"
+	"github.com/joshuaalewis/saml/xmlenc"
 )
 
 type IdentityProviderTest struct {
