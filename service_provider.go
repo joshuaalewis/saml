@@ -117,6 +117,9 @@ type ServiceProvider struct {
 
 	// CatchAllRedirectURL if used, this url will be the primary redirect after login
 	CatchAllRedirectURL string
+
+	// UniqueIdentifier exists to allow multitenant AD routes for ecs and audience
+	UniqueIdentifier string
 }
 
 // MaxIssueDelay is the longest allowed time between when a SAML assertion is
