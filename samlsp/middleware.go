@@ -39,6 +39,7 @@ import (
 // When issuing JSON Web Tokens, a signing key is required. Because the
 // SAML service provider already has a private key, we borrow that key
 // to sign the JWTs as well.
+
 type Middleware struct {
 	ServiceProvider saml.ServiceProvider
 	OnError         func(w http.ResponseWriter, r *http.Request, err error)
